@@ -23,7 +23,7 @@ ss = readNPY(fullfile(ksDir, 'spike_times.npy'));
 st = double(ss)/spikeStruct.sample_rate;
 spikeTemplates = readNPY(fullfile(ksDir, 'spike_templates.npy')); % note: zero-indexed
 
-if exist(fullfile(ksDir, 'spike_clusters.npy'))
+if exist(fullfile(ksDir, 'spike_clusters.npy'), 'file')
     clu = readNPY(fullfile(ksDir, 'spike_clusters.npy'));
 else
     clu = spikeTemplates;
@@ -40,10 +40,10 @@ else
 end
 
 cgsFile = '';
-if exist(fullfile(ksDir, 'cluster_groups.csv')) 
+if exist(fullfile(ksDir, 'cluster_groups.csv'), 'file') 
     cgsFile = fullfile(ksDir, 'cluster_groups.csv');
 end
-if exist(fullfile(ksDir, 'cluster_group.tsv')) 
+if exist(fullfile(ksDir, 'cluster_group.tsv'), 'file') 
    cgsFile = fullfile(ksDir, 'cluster_group.tsv');
 end 
 if ~isempty(cgsFile)
