@@ -10,7 +10,13 @@ s1 = correctTo(:);
 s2 = correctFrom(:);
 
 if length(s1)==length(s2)
-    b = regress(s1, [s2 ones(size(s2))]);
+    try % if Statistics and Machine Learning Toolbox exists, use Robust Fit with fitlm
+        mdl = fitlm([s2 ones(size(s2))], s1, 'linear', ...
+                'RobustOpts','on', 'Intercept',false);
+        b = mdl.Coefficients.Estimate;
+    catch
+        b = regress(s1, [s2 ones(size(s2))]);
+    end
 else
     fprintf(1, 'warning: may be missing events in one of the two inputs! trying to fit anyway\n')
     op = optimoptions('fmincon', 'TolX', 1e-9);
